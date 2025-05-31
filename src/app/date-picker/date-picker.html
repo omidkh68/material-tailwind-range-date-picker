@@ -1,0 +1,20 @@
+<button (click)="openDateDialogSelector()" type="button" [disabled]="disabled()"
+        [ngClass]="selectedDateRange() ? 'px-1.5 py-1' : 'p-1.5'"
+        class="h-[30px] bg-white dark:bg-zinc-600 border border-stone-400 dark:border-zinc-800 rounded-lg flex-center gap-2 text-xs text-stone-600 dark:text-zinc-200 hover:text-amber-600 dark:hover:text-amber-500 transition-colors relative">
+  <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-current"/>
+
+  <div [ngClass]="selectedDateRange() ? 'text-[0.64rem] flex-col items-start max-w-32' : 'text-xs'"
+       class="w-fit font-medium leading-none whitespace-nowrap flex truncate">
+    @if (selectedDateRange()) {
+      <span>{{ selectedDateRange()?.start | date: 'MMM d yyyy, HH:mm' }}</span>
+      <span>{{ selectedDateRange()?.end | date: 'MMM d yyyy, HH:mm' }}</span>
+    } @else {
+      <span>Choose Dates</span>
+    }
+  </div>
+
+  @if (selectedDateRange()) {
+    <ng-icon (click)="selectedDateRange.set(undefined); dateTimePicker.set(undefined); $event.stopPropagation()"
+             name="featherX" strokeWidth="3px" size="15px" class="text-current cursor-pointer"/>
+  }
+</button>

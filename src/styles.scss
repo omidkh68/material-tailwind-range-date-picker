@@ -1,1 +1,417 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html, body { height: 100%; }
+body {
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --mat-form-field-container-height: 35px;
+  --mdc-icon-button-state-layer-size: 35px;
+  --mat-icon-button-touch-target-display: 35px;
+  --mat-option-label-text-weight: 500;
+  --mat-option-label-text-size: .9rem;
+  --mat-text-button-horizontal-padding: 15px;
+
+  @include mat.dialog-overrides((
+    container-color: white,
+    container-shape: 1rem
+  ));
+
+  @include mat.menu-overrides((
+    item-label-text-font: 'Open Sans'
+  ));
+
+  @include mat.chips-overrides((
+    outline-color: #e7e6e2,
+  ));
+
+  @include mat.datepicker-overrides((
+    calendar-text-size: 13px,
+    calendar-body-label-text-size: 14px,
+    calendar-header-text-size: 14px,
+    calendar-body-label-text-weight: 600,
+    calendar-header-text-weight: 700,
+    calendar-container-background-color: #27272a,
+    calendar-date-hover-state-background-color: #a8a29e,
+    calendar-date-in-range-state-background-color: #fff7ed,
+    calendar-date-selected-state-background-color: #f9731,
+  ));
+
+  @include mat.timepicker-overrides((
+    container-background-color: #27272a,
+  ));
+
+  @include mat.form-field-overrides((
+    outlined-container-shape: .5rem,
+    outlined-label-text-size: .8rem,
+    outlined-label-text-populated-size: .8rem,
+    outlined-focus-outline-color: #d6d3d1,
+    outlined-hover-outline-color: #d6d3d1,
+    outlined-outline-color: #e7e6e2,
+    container-text-size: .8rem,
+    container-vertical-padding: 8px,
+    filled-with-label-container-padding-top: .5rem,
+  ));
+
+  @include mat.tabs-overrides((
+    active-indicator-color: #d97706,
+    active-focus-indicator-color: #d97706,
+    active-hover-indicator-color: #d97706,
+    divider-color: #d1d5db,
+    divider-height: 2px,
+    container-height: 40px,
+    label-text-weight: 700,
+    active-label-text-color: #d97706,
+    active-focus-label-text-color: #d97706,
+    active-hover-label-text-color: #d97706,
+    inactive-ripple-color: transparent,
+    inactive-label-text-color: #a8a29e,
+  ));
+
+  @include mat.table-overrides((
+    background-color: white,
+    header-headline-color: #44403c,
+    header-headline-size: .75rem,
+    header-headline-weight: 600,
+    row-item-outline-width: 1px,
+    row-item-outline-color: #f3f4f6,
+    row-item-label-text-color: #a8a29e,
+    row-item-label-text-size: .72rem,
+    row-item-label-text-weight: 500,
+    header-container-height: 35px,
+    row-item-container-height: 40px,
+  ));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include mat.dialog-overrides((
+      container-color: #52525b
+    ));
+
+    @include mat.form-field-overrides((
+      outlined-focus-outline-color: #27272a,
+      outlined-hover-outline-color: #27272a,
+      outlined-outline-color: #18181b,
+      outlined-input-text-color: #e4e4e7,
+      outlined-input-text-placeholder-color: #a1a1aa,
+      outlined-caret-color: #a1a1aa,
+    ));
+
+    .mdc-checkbox__background {
+      @apply border-zinc-400;
+    }
+
+    .mdc-checkbox:hover .mdc-checkbox__native-control:not(:checked) ~ .mdc-checkbox__background, .mdc-checkbox:hover .mdc-checkbox__native-control:not(:indeterminate) ~ .mdc-checkbox__background,
+    .mdc-checkbox__native-control:focus:not(:checked) ~ .mdc-checkbox__background, .mdc-checkbox__native-control:focus:not(:indeterminate) ~ .mdc-checkbox__background {
+      @apply border-zinc-200;
+    }
+
+    @include mat.tabs-overrides((
+      divider-color: #18181b,
+      inactive-focus-label-text-color : #e4e4e7,
+      inactive-hover-label-text-color: #d4d4d8,
+    ));
+
+    @include mat.chips-overrides((
+      outline-color: #27272a,
+    ));
+
+    @include mat.table-overrides((
+      background-color: #303035,
+      row-item-outline-color: #18181b
+    ));
+
+    @include mat.checkbox-overrides((
+      state-layer-size: 28px
+    ));
+  }
+
+  html:not(.dark) {
+    @include mat.dialog-overrides((
+      container-color: white
+    ));
+
+    @include mat.tabs-overrides((
+      divider-color: #d1d5db,
+      inactive-focus-label-text-color : #e4e4e7,
+      inactive-hover-label-text-color: #d4d4d8,
+    ));
+
+    @include mat.table-overrides((
+      background-color: white,
+      header-headline-color: #44403c,
+      row-item-outline-color: #f3f4f6,
+      row-item-label-text-color: #a8a29e,
+    ));
+
+    @include mat.datepicker-overrides((
+      calendar-text-size: 13px,
+      calendar-body-label-text-size: 14px,
+      calendar-header-text-size: 14px,
+      calendar-body-label-text-weight: 600,
+      calendar-header-text-weight: 700,
+      calendar-container-background-color: white,
+      calendar-date-hover-state-background-color: #a8a29e,
+      calendar-date-in-range-state-background-color: #fff7ed,
+      calendar-date-selected-state-background-color: #f9731,
+    ));
+
+    @include mat.timepicker-overrides((
+      container-background-color: white,
+    ));
+  }
+}
+
+$gray-low-color: rgba(63, 70, 44, 0.2);
+$gray-after-low-color: #999;
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+button {
+  @apply select-none;
+}
+
+html.dark {
+  .mat-datepicker-content .mat-calendar {
+    height: inherit !important;
+    @apply shadow border border-gray-800 rounded-2xl py-2;
+  }
+
+  .mat-mdc-header-cell {
+    background-color: #27272a !important;
+  }
+
+  .mat-calendar .mat-mdc-button {
+    color: #e4e4e7;
+  }
+
+  .mat-calendar .mat-calendar-arrow {
+    fill: #e4e4e7;
+  }
+
+  @include mat.dialog-overrides((
+    container-color: #52525b
+  ));
+
+  @include mat.form-field-overrides((
+    outlined-focus-outline-color: #27272a,
+    outlined-hover-outline-color: #27272a,
+    outlined-outline-color: #18181b,
+    outlined-input-text-color: #e4e4e7,
+    outlined-input-text-placeholder-color: #a1a1aa,
+    outlined-caret-color: #a1a1aa,
+    outlined-label-text-color: #a1a1aa,
+    outlined-focus-label-text-color: #e4e4e7,
+    outlined-hover-label-text-color: #f1f1f1
+  ));
+
+  .mdc-checkbox__background {
+    @apply border-zinc-400;
+  }
+
+  .mdc-checkbox:hover .mdc-checkbox__native-control:not(:checked)~.mdc-checkbox__background, .mdc-checkbox:hover .mdc-checkbox__native-control:not(:indeterminate)~.mdc-checkbox__background,
+  .mdc-checkbox__native-control:focus:not(:checked)~.mdc-checkbox__background, .mdc-checkbox__native-control:focus:not(:indeterminate)~.mdc-checkbox__background {
+    @apply border-zinc-200;
+  }
+
+  @include mat.tabs-overrides((
+    divider-color: #18181b,
+    inactive-focus-label-text-color : #e4e4e7,
+    inactive-hover-label-text-color: #d4d4d8,
+  ));
+
+  @include mat.table-overrides((
+    background-color: #303035,
+    row-item-outline-color: #18181b
+  ));
+
+  @include mat.chips-overrides((
+    outline-color: #27272a,
+  ));
+
+  .mat-timepicker-panel .mat-mdc-option,
+  .mat-mdc-icon-button,
+  .mat-calendar-body-cell-content,
+  .mat-calendar-table-header th,
+  .mat-calendar-body-label,
+  .mat-calendar-body-cell-content.mat-focus-indicator {
+    color: #f1f1f1;
+  }
+
+  .mat-calendar-body-in-range .mat-calendar-body-cell-content {
+    color: #18181b;
+  }
+}
+
+*, *::before, *::after, h1, h2, h3, h4, h5, h6, p {
+  font-family: "Open Sans", ui-sans-serif, system-ui !important;
+}
+
+[disabled] {
+  @apply cursor-not-allowed opacity-60;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $gray-low-color;
+  border-radius: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $gray-after-low-color;
+  border-radius: 10px;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+a, button {
+  @apply cursor-pointer;
+}
+
+/* Material override styles */
+.map-detail .mat-mdc-menu-item {
+  border: inherit;
+}
+
+.mat-mdc-header-cell {
+  background-color: #f5f5f4 !important;
+}
+
+input:focus {
+  box-shadow: none !important;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+  height: 100%;
+}
+
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
+}
+
+.mat-datepicker-content .mat-calendar {
+  height: inherit !important;
+  @apply shadow border border-gray-300 rounded-2xl py-2;
+}
+
+.mat-calendar-controls {
+  margin-top: 0 !important;
+  margin-bottom: 2% !important;
+}
+
+.mat-calendar-header {
+  padding: 0 !important;
+}
+
+.mat-calendar-period-button {
+  margin: 0 !important;
+  height: 35px !important;
+}
+
+.mat-calendar-content {
+  padding: 0 !important;
+}
+
+.mat-calendar-table-header th {
+  padding-bottom: 0 !important;
+}
+
+.mat-mdc-select-arrow-wrapper {
+  height: 15px !important;
+}
+
+.mat-mdc-dialog-panel {
+  @apply transition-all ease-in-out;
+
+  max-width: inherit !important;
+}
+
+.mat-mdc-checkbox {
+  &.w-full {
+    .mdc-form-field {
+      width: 100% !important;
+    }
+
+    .mdc-label {
+      width: calc(100% - 25px);
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &:hover {
+
+  }
+
+  .mdc-form-field {
+    width: 100%;
+  }
+}
+
+.mat-calendar-body-selected {
+  @apply bg-gradient-to-r from-red-500 to-orange-500;
+}
+
+.mat-calendar-body-active .mat-calendar-body-cell-content {
+  @apply bg-[#a8a29e];
+}
+
+.mat-mdc-option {
+  min-height: 35px !important;
+  padding: 0 10px !important;
+}
+
+.date-range-picker {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+mat-calendar {
+  display: inline-block;
+  margin: auto;
+}
+
+.selected-dates {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.mat-mdc-form-field.no-hint {
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+}
+
+.mdc-dialog aside {
+  @apply shadow-md;
+}
+
+/* End of Material override styles */

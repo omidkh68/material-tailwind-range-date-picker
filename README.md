@@ -1,6 +1,6 @@
 # 📅 Material Tailwind Range Date Picker
 
-A customizable **Date Range Picker** built with **Angular 20**, **Angular Material**, and **Tailwind CSS v4**, supporting **two-way binding**, **date-time offsets**, and a clean modern UI.
+A customizable **Date Range Picker** built with **Angular 20**, **Angular Material**, and **Tailwind CSS v4**, supporting **two-way binding**, **date-time offsets**, and a clean Dark/Light modern UI.
 
 ---
 
@@ -51,28 +51,16 @@ Then visit [http://localhost:4200](http://localhost:4200)
 
 ## 📚 How to Use
 
-### 1. Add the `DateSelectorComponent` in your template
+### 1. Add the `DatePicker` in your template
 ```html
-<app-date-selector
-  [startDate]="start"
-  [endDate]="end"
-  (startDateChange)="onStartChange($event)"
-  (endDateChange)="onEndChange($event)">
-</app-date-selector>
+<date-picker [(dateTimePicker)]="dateTimePicker"
+             [required]="true"
+             (selectedDates)="selectDates($event)"
 ```
 
 ### 2. Bind your variables in the component
 ```ts
-start = new Date();
-end = new Date();
-
-onStartChange(date: Date) {
-  this.start = date;
-}
-
-onEndChange(date: Date) {
-  this.end = date;
-}
+selectedDateRange = model<DateRange<Date> | undefined>();
 ```
 
 ### 3. Offset Support
@@ -81,14 +69,26 @@ All date-times are internally normalized using offset logic (e.g., UTC+X), makin
 ---
 
 ## 📷 Screenshots
-
-*(Add your UI screenshots here once ready)*
+### Dark view
+![main-dark.png](public/screenshots/main-dark.png)
+### Light view
+![main-light.png](public/screenshots/main-light.png)
+### Selected Dates
+![main-selected-dates.png](public/screenshots/main-selected-dates.png)
+### Open dialog in Dark view
+![open-dialog-dark.png](public/screenshots/open-dialog-dark.png)
+### Open dialog in Light view
+![open-dialog-light.png](public/screenshots/open-dialog-light.png)
+### Active all features
+![open-dialog-all-features.png](public/screenshots/open-dialog-all-features.png)
+### Show Timepicker
+![open-dialog-timepicker-dark.png](public/screenshots/open-dialog-timepicker-dark.png)
 
 ---
 
 ## 📄 License
 
-MIT License © 2025 [YOUR NAME]
+MIT License © 2025 Omidkh68
 
 ---
 
