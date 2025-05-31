@@ -10,7 +10,7 @@ A customizable **Date Range Picker** built with **Angular 20**, **Angular Materi
 - 🎨 Styled using **Tailwind CSS v4**
 - 🧱 Uses latest **Angular Material** components
 - 🕑 Supports **date & time selection**
-- 🔄 **Two-way binding** for start and end date-times
+- 🔄 **Two-way binding** for start and end date-times using Signal
 - 🧭 Handles **offsets** and timezone adjustments
 - 📦 Lightweight, responsive, and easy to integrate
 
@@ -40,12 +40,13 @@ Then visit [http://localhost:4200](http://localhost:4200)
 
 ## 🛠 Technologies Used
 
-| Tool            | Version         |
-|-----------------|-----------------|
-| Angular         | ^20             |
-| Angular Material| latest          |
-| Tailwind CSS    | ^4              |
-| TypeScript      | ^5              |
+| Tool             | Version |
+|------------------|---------|
+| Angular          | ^20     |
+| Angular Material | ^20     |
+| Tailwind CSS     | ^4      |
+| Ng-icon          | ^31     |
+| TypeScript       | ^5      |
 
 ---
 
