@@ -1,59 +1,97 @@
-# MaterialTailwindRangeDatePicker
+# 📅 Material Tailwind Range Date Picker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+A customizable **Date Range Picker** built with **Angular 20**, **Angular Material**, and **Tailwind CSS v4**, supporting **two-way binding**, **date-time offsets**, and a clean modern UI.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Features
 
+- ✅ Built with **Angular v20**
+- 🎨 Styled using **Tailwind CSS v4**
+- 🧱 Uses latest **Angular Material** components
+- 🕑 Supports **date & time selection**
+- 🔄 **Two-way binding** for start and end date-times
+- 🧭 Handles **offsets** and timezone adjustments
+- 📦 Lightweight, responsive, and easy to integrate
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repo
+```bash
+git clone https://github.com/omidkh68/material-tailwind-range-date-picker.git
+cd material-tailwind-range-date-picker
+```
+
+### Install dependencies
+```bash
+npm install
+```
+
+### Run the app locally
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Then visit [http://localhost:4200](http://localhost:4200)
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠 Technologies Used
 
-```bash
-ng generate component component-name
+| Tool            | Version         |
+|-----------------|-----------------|
+| Angular         | ^20             |
+| Angular Material| latest          |
+| Tailwind CSS    | ^4              |
+| TypeScript      | ^5              |
+
+---
+
+## 📚 How to Use
+
+### 1. Add the `DateSelectorComponent` in your template
+```html
+<app-date-selector
+  [startDate]="start"
+  [endDate]="end"
+  (startDateChange)="onStartChange($event)"
+  (endDateChange)="onEndChange($event)">
+</app-date-selector>
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 2. Bind your variables in the component
+```ts
+start = new Date();
+end = new Date();
 
-```bash
-ng generate --help
+onStartChange(date: Date) {
+  this.start = date;
+}
+
+onEndChange(date: Date) {
+  this.end = date;
+}
 ```
 
-## Building
+### 3. Offset Support
+All date-times are internally normalized using offset logic (e.g., UTC+X), making it ideal for systems with timezone-aware data.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 📷 Screenshots
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+*(Add your UI screenshots here once ready)*
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 📄 License
 
-```bash
-ng test
-```
+MIT License © 2025 [YOUR NAME]
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🙌 Contributions
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
