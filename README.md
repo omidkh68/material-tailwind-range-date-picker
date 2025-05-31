@@ -2,7 +2,7 @@
 
 A customizable **Date Range Picker** built with **Angular 20**, **Angular Material**, and **Tailwind CSS v4**, supporting **two-way binding**, **date-time offsets**, and a clean Dark/Light modern UI.
 
-👉 **Live Demo:** [omidkh68.github.io/material-tailwind-range-date-picker](https://omidkh68.github.io/material-tailwind-range-date-picker/)
+👉 **Live Demo:** <a href="https://omidkh68.github.io/material-tailwind-range-date-picker/" target="_blank">omidkh68.github.io/material-tailwind-range-date-picker</a>
 
 ---
 
