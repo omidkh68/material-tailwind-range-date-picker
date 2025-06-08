@@ -34,7 +34,7 @@ export class SmartDialogService {
 
     if (isMobile) {
       this.ref = this.#bottomSheet.open(component, {
-        ariaLabel: 'Dialog',
+        ariaLabel: 'Bottomsheet',
         ariaModal: true,
         data: config.data,
         panelClass: config.panelClass,
@@ -67,8 +67,9 @@ export class SmartDialogService {
     } else {
       this.ref = this.#dialog.open(component, {
         data: config.data,
-        ariaLabel: 'Bottomsheet',
+        ariaLabel: 'Dialog',
         ariaModal: true,
+        autoFocus: false,
         panelClass: config.panelClass,
         disableClose: config.disableClose,
         width: config.width,
