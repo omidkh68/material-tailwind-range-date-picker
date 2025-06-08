@@ -10,14 +10,14 @@ import {
   signal
 } from '@angular/core';
 import {take, tap} from 'rxjs';
-import {MatDialog} from '@angular/material/dialog';
 import {DateSelector} from './date-selector/date-selector';
-import {WindowService} from '../helper/window.service';
 import {DatePipe, NgClass} from '@angular/common';
+import {SmartDialogService} from '../smart-dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NgIcon, provideIcons} from '@ng-icons/core';
 import {DateRange, MatDatepickerModule} from '@angular/material/datepicker';
 import {DatePickerModel, DateTimePicker} from './model/datepicker';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {featherCheck, featherCalendar, featherX} from '@ng-icons/feather-icons';
 
 @Component({
@@ -33,8 +33,8 @@ import {featherCheck, featherCalendar, featherX} from '@ng-icons/feather-icons';
   ]
 })
 export class DatePicker {
-  readonly #dialog = inject(MatDialog);
-  readonly #windowService = inject(WindowService);
+  readonly #breakpoints = inject(BreakpointObserver);
+  readonly #smartDialog = inject(SmartDialogService);
 
   protected destroyRef = inject(DestroyRef);
 
@@ -62,18 +62,19 @@ export class DatePicker {
   });
 
   openDateDialogSelector(): void {
+    const isMobile = this.#breakpoints.isMatched([
+      Breakpoints.Handset,
+      Breakpoints.Tablet
+    ]);
     const data: DatePickerModel = {
       optionalFeatures: this.optionalFeatures(),
       dateTimePicker: this.dateTimePicker(),
       future: this.future()
     };
-    const dialogWidth: boolean = this.#windowService.nativeWindow.innerWidth <= 1024;
-    const dialogRef = this.#dialog.open(DateSelector, {
-      autoFocus: true,
-      width: dialogWidth ? '98%' : '850px',
-      height: dialogWidth ? '80%' : '470px',
-      data,
-      position: dialogWidth ? {bottom: '1rem'} : undefined,
+    const dialogRef = this.#smartDialog.open(DateSelector, {
+      width: '850px',
+      height: isMobile ? '90vh' : '470px',
+      data
     });
 
     dialogRef.afterOpened().pipe(

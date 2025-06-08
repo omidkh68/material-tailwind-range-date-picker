@@ -1,242 +1,220 @@
-<aside class="w-full h-full flex flex-col justify-between overflow-hidden absolute">
-  <header
-    class="w-full bg-gray-200/70 dark:bg-zinc-700 text-stone-600 dark:text-zinc-100 border-b border-b-gray-200 dark:border-b-zinc-800 flex gap-2 justify-between items-center h-10 pl-3">
-    <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-current"/>
+<container headerTitle="Date time selector"
+           headerIcon="featherClock"
+           submitTitle="Apply"
+           [disabledSubmit]="!selectedDateRange"
+           [footerExtraContent]="footerExtraContent"
+           (submit)="submit()"
+           (dismiss)="dismiss()">
+  <!-- Left time ranges -->
+  <div class="w-48 h-full overflow-y-auto hidden lg:block" dir="rtl">
+    <div class="w-full flex justify-left rounded-lg" dir="ltr">
+      <ul class="w-full text-gray-900">
+        @for (timeRangeItem of timeRanges(); track timeRangeItem) {
+          <li
+            [ngClass]="selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end ? 'bg-gray-100 dark:bg-zinc-700/40' : ''"
+            class="w-full group hover:bg-gray-100 dark:hover:bg-zinc-700/40 transition-all">
+            <button (click)="selectTimeRange(timeRangeItem)"
+                    [ngClass]="selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end ? 'text-green-600 pl-4 font-bold' : 'text-stone-700 dark:text-zinc-200'"
+                    class="w-full px-2 py-2 text-xs font-semibold group-hover:pl-4 transition-all whitespace-nowrap flex items-center gap-2">
+              <span>{{ timeRangeItem.label }}</span>
 
-    <h3 class="text-sm font-semibold">Date time selector</h3>
-
-    <button (click)="dismiss()" type="button"
-            class="rounded-full ml-auto px-3 py-2 flex-center">
-      <ng-icon name="featherX" strokeWidth="3px" size="15px" class="text-current"/>
-    </button>
-  </header>
-
-  <main class="w-full flex h-[calc(100%-5.25rem)] overflow-y-auto bg-gray-200 dark:bg-zinc-600">
-    <!-- Left time ranges -->
-    <div class="w-48 h-full overflow-y-auto hidden lg:block" dir="rtl">
-      <div class="w-full flex justify-left rounded-lg" dir="ltr">
-        <ul class="w-full text-gray-900">
-          @for (timeRangeItem of timeRanges(); track timeRangeItem) {
-            <li
-              [ngClass]="selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end ? 'bg-gray-100 dark:bg-zinc-700/40' : ''"
-              class="w-full group hover:bg-gray-100 dark:hover:bg-zinc-700/40 transition-all">
-              <button (click)="selectTimeRange(timeRangeItem)"
-                      [ngClass]="selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end ? 'text-green-600 pl-4 font-bold' : 'text-stone-700 dark:text-zinc-200'"
-                      class="w-full px-2 py-2 text-xs font-semibold group-hover:pl-4 transition-all whitespace-nowrap flex items-center gap-2">
-                <span>{{ timeRangeItem.label }}</span>
-
-                @if (selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end) {
-                  <ng-icon name="featherCheck" strokeWidth="3px" size="12px" class="text-green-600"/>
-                }
-              </button>
-            </li>
-          }
-        </ul>
-      </div>
+              @if (selectedTimeRange() && selectedTimeRange()?.start === timeRangeItem.start && selectedTimeRange()?.end === timeRangeItem.end) {
+                <ng-icon name="featherCheck" strokeWidth="3px" size="12px" class="text-green-600"/>
+              }
+            </button>
+          </li>
+        }
+      </ul>
     </div>
-    <!-- End of Left time ranges -->
+  </div>
+  <!-- End of Left time ranges -->
 
-    <!-- Calendar and Time range container -->
-    <div class="w-full lg:w-[calc(100%-12rem)] h-full">
-      <div
-        class="w-full py-4 md:py-0 md:h-full flex flex-col md:flex-row bg-white dark:bg-zinc-700 shadow md:overflow-hidden">
-        <!-- Calendar Container -->
-        <section class="w-full md:w-1/2 flex-center border-r border-r-gray-200 dark:border-r-zinc-800">
-          <div class="w-full md:h-80 mx-auto mb-2 flex-center flex-col p-4 gap-6">
-            <mat-calendar [maxDate]="!future() ? now : undefined" [(selected)]="selectedDateRange"
-                          (selectedChange)="rangeChanged($event)" class="w-full"/>
+  <!-- Calendar and Time range container -->
+  <div class="w-full lg:w-[calc(100%-12rem)] h-full">
+    <div
+      class="w-full py-4 md:py-0 md:h-full flex flex-col md:flex-row bg-white dark:bg-zinc-700 shadow md:overflow-hidden">
+      <!-- Calendar Container -->
+      <section class="w-full md:w-1/2 flex-center border-r border-r-gray-200 dark:border-r-zinc-800">
+        <div class="w-full md:h-80 mx-auto mb-2 flex-center flex-col p-4 gap-6">
+          <mat-calendar [maxDate]="!future() ? now : undefined" [(selected)]="selectedDateRange"
+                        (selectedChange)="rangeChanged($event)" class="w-full"/>
 
-            <p
-              class="w-full flex items-start gap-1 leading-none text-xs text-amber-600 dark:text-orange-300 font-semibold">
-              <ng-icon name="featherInfo" strokeWidth="2px" class="text-current shrink-0"/>
+          <p
+            class="w-full flex items-start gap-1 leading-none text-xs text-amber-600 dark:text-orange-300 font-semibold">
+            <ng-icon name="featherInfo" strokeWidth="2px" class="text-current shrink-0"/>
 
-              <span>Click twice on a day if you want to select exactly one day.</span>
-            </p>
-          </div>
-        </section>
-        <!-- End of Calendar Container -->
+            <span>Click twice on a day if you want to select exactly one day.</span>
+          </p>
+        </div>
+      </section>
+      <!-- End of Calendar Container -->
 
-        <!-- Time range container -->
-        <section class="w-full md:w-1/2 md:overflow-y-auto md:overflow-x-hidden flex flex-col">
-          <!-- Start and End Input dates -->
-          <div class="flex flex-col py-4">
-            <!-- From date -->
-            <div class="flex flex-col gap-2 relative px-3 py-2">
-              <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">Start Date</label>
+      <!-- Time range container -->
+      <section class="w-full md:w-1/2 md:overflow-y-auto md:overflow-x-hidden flex flex-col">
+        <!-- Start and End Input dates -->
+        <div class="flex flex-col py-4">
+          <!-- From date -->
+          <div class="flex flex-col gap-2 relative px-3 py-2">
+            <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">Start Date</label>
 
-              <div class="flex items-center rounded-lg overflow-hidden bg-white border border-gray-400">
-                <div class="w-1/2 relative flex items-center">
-                  <input type="text" matInput [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event)"
-                         [matDatepicker]="startDatePicker" [max]="!future() ? now : undefined"
-                         (click)="startDatePicker.open()" (focus)="startDatePicker.open()"
-                         placeholder="dd-mm-YYYY"
-                         class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
-                  <mat-datepicker #startDatePicker></mat-datepicker>
+            <div class="flex items-center rounded-lg overflow-hidden border border-gray-400">
+              <div class="w-1/2 relative flex items-center">
+                <input type="text" matInput [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event)"
+                       [matDatepicker]="startDatePicker" [max]="!future() ? now : undefined"
+                       (click)="startDatePicker.open()" (focus)="startDatePicker.open()"
+                       placeholder="dd-mm-YYYY"
+                       class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
+                <mat-datepicker #startDatePicker></mat-datepicker>
 
-                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
-                    <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
-                  </button>
-                </div>
+                <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                  <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                </button>
+              </div>
 
-                <div class="w-1/2 relative flex items-center">
-                  <input matInput [matTimepicker]="startTimePicker" placeholder="00:00"
-                         [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event, true)"
-                         class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
-                  <mat-timepicker #startTimePicker interval="5min"/>
+              <div class="w-1/2 relative flex items-center">
+                <input matInput [matTimepicker]="startTimePicker" placeholder="00:00"
+                       [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event, true)"
+                       class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
+                <mat-timepicker #startTimePicker interval="5min"/>
 
-                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
-                    <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
-                  </button>
-                </div>
+                <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                  <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                </button>
               </div>
             </div>
-            <!-- End of From date -->
+          </div>
+          <!-- End of From date -->
 
-            <!-- to date -->
-            <div class="flex flex-col gap-2 relative px-3 py-2">
-              <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">End Date</label>
+          <!-- to date -->
+          <div class="flex flex-col gap-2 relative px-3 py-2">
+            <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">End Date</label>
 
-              <div class="flex items-center rounded-lg overflow-hidden bg-white border border-gray-400">
-                <div class="w-1/2 relative flex items-center">
-                  <input type="text" matInput [ngModel]="endDate()" (ngModelChange)="changeDatePart('end', $event)"
-                         [matDatepicker]="endDatePicker" [max]="!future() ? now : undefined"
-                         (click)="endDatePicker.open()" (focus)="endDatePicker.open()"
-                         placeholder="dd-mm-YYYY"
-                         class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
-                  <mat-datepicker #endDatePicker></mat-datepicker>
+            <div class="flex items-center rounded-lg overflow-hidden border border-gray-400">
+              <div class="w-1/2 relative flex items-center">
+                <input type="text" matInput [ngModel]="endDate()" (ngModelChange)="changeDatePart('end', $event)"
+                       [matDatepicker]="endDatePicker" [max]="!future() ? now : undefined"
+                       (click)="endDatePicker.open()" (focus)="endDatePicker.open()"
+                       placeholder="dd-mm-YYYY"
+                       class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
+                <mat-datepicker #endDatePicker></mat-datepicker>
 
-                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
-                    <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
-                  </button>
-                </div>
+                <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                  <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                </button>
+              </div>
 
-                <div class="w-1/2 relative flex items-center">
-                  <input matInput [matTimepicker]="endTimePicker" placeholder="00:00"
-                         [(ngModel)]="endDate" (ngModelChange)="changeDatePart('end', $event, true)"
-                         class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
-                  <mat-timepicker #endTimePicker interval="5min"/>
+              <div class="w-1/2 relative flex items-center">
+                <input matInput [matTimepicker]="endTimePicker" placeholder="00:00"
+                       [(ngModel)]="endDate" (ngModelChange)="changeDatePart('end', $event, true)"
+                       class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
+                <mat-timepicker #endTimePicker interval="5min"/>
 
-                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
-                    <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
-                  </button>
-                </div>
+                <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                  <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                </button>
               </div>
             </div>
-            <!-- End of to date -->
           </div>
-          <!-- End of Start and End Input dates -->
+          <!-- End of to date -->
+        </div>
+        <!-- End of Start and End Input dates -->
 
-          @if (optionalFeatures()) {
-            <!-- Custom time -->
-            <div class="flex flex-col gap-2 px-3 mb-2">
-              <!-- Custom days -->
-              <div class="flex flex-col gap-2 justify-between items-start">
-                <!-- All days checkbox -->
-                <mat-checkbox [(ngModel)]="allDays" class="relative -left-1">
-                  <span class="text-xs whitespace-nowrap dark:text-zinc-200 font-semibold">All Days</span>
-                </mat-checkbox>
-                <!-- End of All days checkbox -->
-
-                @if (!allDays()) {
-                  <div
-                    class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
-                    @for (type of weekTypes(); track type.value) {
-                      <button (click)="changeWeekType(type)"
-                              [ngClass]="selectedWeekType()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
-                              class="px-1.5 py-2 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
-                        {{ type.label }}
-                      </button>
-                    }
-                  </div>
-                }
-              </div>
-              <!-- End of Custom days -->
+        @if (optionalFeatures()) {
+          <!-- Custom time -->
+          <div class="flex flex-col gap-2 px-3 mb-2">
+            <!-- Custom days -->
+            <div class="flex flex-col gap-2 justify-between items-start">
+              <!-- All days checkbox -->
+              <mat-checkbox [(ngModel)]="allDays" class="relative -left-1">
+                <span class="text-xs whitespace-nowrap dark:text-zinc-200 font-semibold">All Days</span>
+              </mat-checkbox>
+              <!-- End of All days checkbox -->
 
               @if (!allDays()) {
-                <!-- Weekdays -->
-                <div class="w-full">
-                  <div
-                    class="flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
-                    @for (type of weekdays(); track type.value) {
-                      <button (click)="changeWeekdays(type)"
-                              [ngClass]="type.selected ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
-                              class="w-[calc(100%/7)] px-1.5 py-2 text-xs text-center leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
-                        {{ type.label }}
-                      </button>
-                    }
-                  </div>
+                <div
+                  class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                  @for (type of weekTypes(); track type.value) {
+                    <button (click)="changeWeekType(type)"
+                            [ngClass]="selectedWeekType()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
+                            class="px-1.5 py-2 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
+                      {{ type.label }}
+                    </button>
+                  }
                 </div>
-                <!-- End of Weekdays -->
               }
             </div>
-            <!-- End of Custom time -->
+            <!-- End of Custom days -->
 
-              <!-- Custom Hours -->
-            <div class="flex flex-col px-3">
-              <!-- Custom days -->
-              <div class="flex flex-col gap-2 justify-between">
-                <!-- All days checkbox -->
-                <mat-checkbox [(ngModel)]="allHours" class="relative -left-1">
-                  <span class="text-xs whitespace-nowrap dark:text-zinc-200 font-semibold">All Hours</span>
-                </mat-checkbox>
-                <!-- End of All days checkbox -->
-
-                @if (!allHours()) {
-                  <div
-                    class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
-                    @for (type of hourTypes(); track type.value) {
-                      <button (click)="applyHourPreset(type)"
-                              [ngClass]="selectedHour()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
-                              class="px-1.5 py-2 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
-                        {{ type.label }}
-                      </button>
-                    }
-                  </div>
-                }
+            @if (!allDays()) {
+              <!-- Weekdays -->
+              <div class="w-full">
+                <div
+                  class="flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                  @for (type of weekdays(); track type.value) {
+                    <button (click)="changeWeekdays(type)"
+                            [ngClass]="type.selected ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
+                            class="w-[calc(100%/7)] px-1.5 py-2 text-xs text-center leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
+                      {{ type.label }}
+                    </button>
+                  }
+                </div>
               </div>
-              <!-- End of Custom days -->
+              <!-- End of Weekdays -->
+            }
+          </div>
+          <!-- End of Custom time -->
+
+            <!-- Custom Hours -->
+          <div class="flex flex-col px-3">
+            <!-- Custom days -->
+            <div class="flex flex-col gap-2 justify-between">
+              <!-- All days checkbox -->
+              <mat-checkbox [(ngModel)]="allHours" class="relative -left-1">
+                <span class="text-xs whitespace-nowrap dark:text-zinc-200" font-semibold>All Hours</span>
+              </mat-checkbox>
+              <!-- End of All days checkbox -->
+
+              @if (!allHours()) {
+                <div
+                  class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                  @for (type of hourTypes(); track type.value) {
+                    <button (click)="applyHourPreset(type)"
+                            [ngClass]="selectedHour()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
+                            class="px-1.5 py-2 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
+                      {{ type.label }}
+                    </button>
+                  }
+                </div>
+              }
             </div>
-            <!-- End of Custom Hours -->
-          }
-        </section>
-        <!-- End of Time range container -->
+            <!-- End of Custom days -->
+          </div>
+          <!-- End of Custom Hours -->
+        }
+      </section>
+      <!-- End of Time range container -->
+    </div>
+  </div>
+  <!-- End of Calendar and Time range container -->
+</container>
+<ng-template #footerExtraContent>
+  <div class="flex items-center gap-1.5 text-xs mr-auto px-1">
+    <span class="hidden md:block text-gray-500 dark:text-gray-300">Range:</span>
+
+    @if (selectedDateRange) {
+      <div class="text-stone-600 dark:text-zinc-100 flex flex-col md:flex-row items-center md:gap-1.5 font-semibold">
+        @if (selectedDateRange.start) {
+          <span>{{ selectedDateRange.start | date: 'MMM d yyyy, HH:mm' }}</span>
+        }
+
+        @if (selectedDateRange.start && selectedDateRange.end) {
+          <span class="hidden md:block">-</span>
+        }
+
+        @if (selectedDateRange.end) {
+          <span>{{ selectedDateRange.end | date: 'MMM d yyyy, HH:mm' }}</span>
+        }
       </div>
-    </div>
-    <!-- End of Calendar and Time range container -->
-  </main>
-
-  <footer
-    class="w-full bg-stone-100 dark:bg-zinc-800 border-t border-t-stone-200 dark:border-t-zinc-800/50 flex gap-2 justify-end items-center h-11 px-3 pt-0.5 pb-1">
-    <div class="flex items-center gap-1.5 text-xs mr-auto px-1">
-      <span class="hidden md:block text-gray-500 dark:text-gray-300">Range:</span>
-
-      @if (selectedDateRange) {
-        <div class="text-stone-600 dark:text-zinc-100 flex flex-col md:flex-row items-center md:gap-1.5 font-semibold">
-          @if (selectedDateRange.start) {
-            <span>{{ selectedDateRange.start | date: 'MMM d yyyy, HH:mm' }}</span>
-          }
-
-          @if (selectedDateRange.start && selectedDateRange.end) {
-            <span class="hidden md:block">-</span>
-          }
-
-          @if (selectedDateRange.end) {
-            <span>{{ selectedDateRange.end | date: 'MMM d yyyy, HH:mm' }}</span>
-          }
-        </div>
-      }
-    </div>
-
-    <button (click)="dismiss()" type="button"
-            class="text-xs leading-none text-stone-500 dark:text-zinc-200 px-2 py-1.5">Dismiss
-    </button>
-
-    <button (click)="submit()" type="button"
-            [disabled]="!selectedDateRange"
-            class="px-2 py-1.5 bg-green-700 text-white rounded-lg flex-center gap-2 font-medium">
-      <ng-icon name="featherCheck" strokeWidth="3px" size="12px" class="text-current"/>
-
-      <span class="text-xs leading-none font-semibold text-white">Apply</span>
-    </button>
-  </footer>
-</aside>
+    }
+  </div>
+</ng-template>

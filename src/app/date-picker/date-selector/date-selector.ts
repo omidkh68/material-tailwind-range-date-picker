@@ -9,11 +9,12 @@ import {
   signal
 } from '@angular/core';
 import {MatInput} from '@angular/material/input';
+import {Container} from '../../container';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {DatePipe, NgClass} from '@angular/common';
+import {SmartDialogService} from '../../smart-dialog';
 import {MatTimepickerModule} from '@angular/material/timepicker';
 import {NgIcon, provideIcons} from '@ng-icons/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 import {DatePickerModel, DateTimePicker, HourType, TimeRange, Weekday, WeekType} from '../model/datepicker';
@@ -47,14 +48,14 @@ import {
   ],
   imports: [
     MatCalendar, NgIcon, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FormsModule, NgClass,
-    MatCheckbox, DatePipe, MatInput, MatTimepickerModule
+    MatCheckbox, DatePipe, MatInput, MatTimepickerModule, Container
   ],
 })
 export class DateSelector implements OnInit {
   readonly #cdr = inject(ChangeDetectorRef);
-  readonly #dialogRef = inject(MatDialogRef);
+  readonly #smartDialog = inject(SmartDialogService);
   readonly #selectionModel = inject(MatRangeDateSelectionModel<Date>);
-  public data = inject(MAT_DIALOG_DATA) as DatePickerModel;
+  public data = this.#smartDialog.getData() as DatePickerModel;
 
   startDate = model<string>('');
   endDate = model<string>('');
@@ -578,6 +579,6 @@ export class DateSelector implements OnInit {
   }
 
   dismiss(): void {
-    this.#dialogRef.close(this.data);
+    this.#smartDialog.close(this.data);
   }
 }

@@ -1,0 +1,70 @@
+<aside class="w-full h-full flex flex-col justify-between overflow-hidden">
+  @if (hasHeader()) {
+    <header
+      class="w-full py-3 md:py-1.5 select-none bg-gray-200/70 dark:bg-zinc-700 text-stone-600 dark:text-zinc-100 flex gap-x-3 justify-between items-center pl-3">
+      @if (headerIcon()) {
+        <ng-icon [name]="headerIcon()" strokeWidth="2px" size="15px" class="text-current"/>
+      }
+
+      @if (headerTitle()) {
+        <h3 class="text-sm font-semibold">{{ headerTitle() }}</h3>
+      }
+
+      @if (headerExtraContent()) {
+        <div class="flex items-center gap-1.5 text-xs flex-1 px-1">
+          <ng-container *ngTemplateOutlet="headerExtraContent() ?? null"></ng-container>
+        </div>
+      }
+
+      <button (click)="dismiss.emit()" type="button"
+              class="rounded-full ml-auto px-3 py-3 md:py-1.5 flex-center">
+        <ng-icon name="featherX" strokeWidth="3px" size="15px" class="text-current"/>
+      </button>
+    </header>
+  }
+
+  <main class="w-full flex-1 flex overflow-y-auto bg-gray-200 dark:bg-zinc-600 border-y border-y-gray-300/50 dark:border-y-zinc-800/50">
+    <ng-content/>
+  </main>
+
+  @if (hasFooter()) {
+    <footer
+      class="w-full select-none bg-gray-200/70 dark:bg-zinc-700 flex gap-x-3 justify-end items-center px-6 md:px-3 py-3 md:py-2.5">
+      @if (footerExtraContent()) {
+        <div class="flex items-center gap-1.5 text-xs mr-auto px-1">
+          <ng-container *ngTemplateOutlet="footerExtraContent() ?? null"></ng-container>
+        </div>
+      }
+
+      @if (hasDismiss()) {
+        <button (click)="dismiss.emit()" type="button"
+                class=" text-sm/6 leading-none text-stone-500 dark:text-zinc-200 px-3 md:px-2 py-3 md:py-1.5">
+          <span class="text-xs leading-none font-semibold">Dismiss</span>
+        </button>
+      }
+
+      @if (hasSecondaryButton()) {
+        <button (click)="secondaryButton.emit()" type="button"
+                [ngClass]="[secondaryButtonBg(), secondaryButtonColor()]"
+                class="rounded-lg px-3 md:px-2 py-3 md:py-1.5 text-sm/6 font-bold flex items-center gap-x-2">
+          <ng-icon [name]="secondaryButtonIcon()" strokeWidth="3px" size="14px" class="text-current"/>
+
+          <span [ngClass]="[secondaryButtonTitleColor()]"
+                class="text-xs leading-none font-semibold">{{ secondaryButtonTitle() }}</span>
+        </button>
+      }
+
+      @if (hasSubmit()) {
+        <button (click)="submit.emit()" type="button"
+                [disabled]="disabledSubmit()"
+                [ngClass]="[submitBg(), submitColor()]"
+                class="rounded-lg px-3 md:px-2 py-3 md:py-1.5 text-sm/6 font-bold flex items-center gap-x-2">
+          <ng-icon [name]="submitIcon()" strokeWidth="3px" size="14px" class="text-current"/>
+
+          <span [ngClass]="[submitTitleColor()]"
+                class="text-xs leading-none font-semibold">{{ submitTitle() }}</span>
+        </button>
+      }
+    </footer>
+  }
+</aside>

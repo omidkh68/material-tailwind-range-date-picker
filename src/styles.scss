@@ -21,6 +21,11 @@ body {
     container-shape: 1rem
   ));
 
+  @include mat.bottom-sheet-overrides((
+    container-shape: 1rem,
+    container-background-color: white
+  ));
+
   @include mat.menu-overrides((
     item-label-text-font: 'Open Sans'
   ));
@@ -93,6 +98,10 @@ body {
       container-color: #52525b
     ));
 
+    @include mat.bottom-sheet-overrides((
+      container-background-color: #52525b
+    ));
+
     @include mat.form-field-overrides((
       outlined-focus-outline-color: #27272a,
       outlined-hover-outline-color: #27272a,
@@ -134,6 +143,10 @@ body {
   html:not(.dark) {
     @include mat.dialog-overrides((
       container-color: white
+    ));
+
+    @include mat.bottom-sheet-overrides((
+      container-background-color: white
     ));
 
     @include mat.tabs-overrides((
@@ -412,6 +425,10 @@ mat-calendar {
 
 .mdc-dialog aside {
   @apply shadow-md;
+}
+
+.mat-bottom-sheet-container {
+  padding: 0 !important;
 }
 
 /* End of Material override styles */
