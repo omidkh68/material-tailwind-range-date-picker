@@ -36,6 +36,7 @@ export class SmartDialogService {
       this.ref = this.#bottomSheet.open(component, {
         ariaLabel: 'Bottomsheet',
         ariaModal: true,
+        autoFocus: false,
         data: config.data,
         panelClass: config.panelClass,
         disableClose: config.disableClose

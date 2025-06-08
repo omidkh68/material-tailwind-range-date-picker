@@ -1,6 +1,6 @@
 <!-- Header -->
 <header class="w-full px-4 py-3 bg-white dark:bg-zinc-800 border-b border-stone-300 dark:border-zinc-700 flex justify-between items-center shadow-sm">
-  <h1 class="text-lg font-semibold text-stone-700 dark:text-stone-200">Material Tailwind Range Date Picker</h1>
+  <h1 class="text-xs lg:text-lg font-semibold text-stone-700 dark:text-stone-200">Material Tailwind Range Date Picker</h1>
   <a href="https://github.com/omidkh68/material-tailwind-range-date-picker" target="_blank"
      class="flex items-center gap-2 px-3 py-1.5 bg-black text-white rounded-lg text-sm hover:bg-stone-800 transition-colors shrink-0">
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
       @for (theme of themes(); track $index) {
         <button (click)="changeTheme(theme)"
                 [ngClass]="selectedTheme() === theme ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
-                class="px-1.5 py-2 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
+                class="px-3.5 py-2.5 text-xs leading-3 font-medium transition-colors duration-200 whitespace-nowrap">
           {{ theme }}
         </button>
       }
