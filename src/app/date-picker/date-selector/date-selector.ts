@@ -39,6 +39,7 @@ import {
   templateUrl: './date-selector.html',
   styles: `:host {
     display: block;
+    height: 100%;
   }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
