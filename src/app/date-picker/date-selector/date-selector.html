@@ -39,10 +39,10 @@
     <!-- Calendar and Time range container -->
     <div class="w-full lg:w-[calc(100%-12rem)] h-full">
       <div
-        class="w-full h-full flex bg-white dark:bg-zinc-700 shadow overflow-hidden">
+        class="w-full py-4 md:py-0 md:h-full flex flex-col md:flex-row bg-white dark:bg-zinc-700 shadow md:overflow-hidden">
         <!-- Calendar Container -->
         <section class="w-full md:w-1/2 flex-center border-r border-r-gray-200 dark:border-r-zinc-800">
-          <div class="w-full h-80 mx-auto mb-2 flex-center flex-col p-4 gap-6">
+          <div class="w-full md:h-80 mx-auto mb-2 flex-center flex-col p-4 gap-6">
             <mat-calendar [maxDate]="!future() ? now : undefined" [(selected)]="selectedDateRange"
                           (selectedChange)="rangeChanged($event)" class="w-full"/>
 
@@ -50,37 +50,43 @@
               class="w-full flex items-start gap-1 leading-none text-xs text-amber-600 dark:text-orange-300 font-semibold">
               <ng-icon name="featherInfo" strokeWidth="2px" class="text-current shrink-0"/>
 
-              <span>Click twice on a day if you want to select
-              exactly one day.</span>
+              <span>Click twice on a day if you want to select exactly one day.</span>
             </p>
           </div>
         </section>
         <!-- End of Calendar Container -->
 
         <!-- Time range container -->
-        <section class="w-full md:w-1/2 overflow-y-auto overflow-x-hidden flex flex-col">
+        <section class="w-full md:w-1/2 md:overflow-y-auto md:overflow-x-hidden flex flex-col">
           <!-- Start and End Input dates -->
           <div class="flex flex-col py-4">
             <!-- From date -->
             <div class="flex flex-col gap-2 relative px-3 py-2">
               <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">Start Date</label>
 
-              <div class="flex items-center rounded-lg overflow-hidden border border-gray-400">
-                <div class="relative">
+              <div class="flex items-center rounded-lg overflow-hidden bg-white border border-gray-400">
+                <div class="w-1/2 relative flex items-center">
                   <input type="text" matInput [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event)"
-                         [matDatepicker]="startDatePicker"
+                         [matDatepicker]="startDatePicker" [max]="!future() ? now : undefined"
                          (click)="startDatePicker.open()" (focus)="startDatePicker.open()"
                          placeholder="dd-mm-YYYY"
-                         class="w-full pl-2 pr-5 h-[33px] dark:bg-white text-xs border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
+                         class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
                   <mat-datepicker #startDatePicker></mat-datepicker>
 
+                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                    <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                  </button>
                 </div>
 
-                <div class="relative">
+                <div class="w-1/2 relative flex items-center">
                   <input matInput [matTimepicker]="startTimePicker" placeholder="00:00"
                          [(ngModel)]="startDate" (ngModelChange)="changeDatePart('start', $event, true)"
-                         class="w-full pl-2 pr-5 h-[33px] dark:bg-white text-xs border-none focus:outline-none focus:ring-0">
+                         class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
                   <mat-timepicker #startTimePicker interval="5min"/>
+
+                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                    <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                  </button>
                 </div>
               </div>
             </div>
@@ -90,18 +96,30 @@
             <div class="flex flex-col gap-2 relative px-3 py-2">
               <label class="text-xs text-stone-600 dark:text-zinc-100 font-medium">End Date</label>
 
-              <div class="flex items-center rounded-lg overflow-hidden border border-gray-400">
-                <input type="text" matInput [ngModel]="endDate()" (ngModelChange)="changeDatePart('end', $event)"
-                       [matDatepicker]="endDatePicker"
-                       (click)="endDatePicker.open()" (focus)="endDatePicker.open()"
-                       placeholder="dd-mm-YYYY"
-                       class="w-full pl-2 pr-5 h-[33px] dark:bg-white text-xs border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
-                <mat-datepicker #endDatePicker></mat-datepicker>
+              <div class="flex items-center rounded-lg overflow-hidden bg-white border border-gray-400">
+                <div class="w-1/2 relative flex items-center">
+                  <input type="text" matInput [ngModel]="endDate()" (ngModelChange)="changeDatePart('end', $event)"
+                         [matDatepicker]="endDatePicker" [max]="!future() ? now : undefined"
+                         (click)="endDatePicker.open()" (focus)="endDatePicker.open()"
+                         placeholder="dd-mm-YYYY"
+                         class="w-full pl-2 pr-5 h-[35px] text-sm border-r border-l-0 border-y-0 border-r-gray-400 focus:outline-none focus:ring-0">
+                  <mat-datepicker #endDatePicker></mat-datepicker>
 
-                <input matInput [matTimepicker]="endTimePicker" placeholder="00:00"
-                       [(ngModel)]="endDate" (ngModelChange)="changeDatePart('end', $event, true)"
-                       class="w-full pl-2 pr-5 h-[33px] dark:bg-white text-xs border-none focus:outline-none focus:ring-0">
-                <mat-timepicker #endTimePicker interval="5min"/>
+                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                    <ng-icon name="featherCalendar" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                  </button>
+                </div>
+
+                <div class="w-1/2 relative flex items-center">
+                  <input matInput [matTimepicker]="endTimePicker" placeholder="00:00"
+                         [(ngModel)]="endDate" (ngModelChange)="changeDatePart('end', $event, true)"
+                         class="w-full pl-2 pr-5 h-[35px] text-sm border-none focus:outline-none focus:ring-0">
+                  <mat-timepicker #endTimePicker interval="5min"/>
+
+                  <button class="w-8 h-8 absolute right-0 pointer-events-none inset-y-auto">
+                    <ng-icon name="featherClock" strokeWidth="2px" size="15px" class="text-gray-500"/>
+                  </button>
+                </div>
               </div>
             </div>
             <!-- End of to date -->
@@ -121,7 +139,7 @@
 
                 @if (!allDays()) {
                   <div
-                    class="w-fit flex justify-between overflow-hidden border border-dark-stone bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                    class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
                     @for (type of weekTypes(); track type.value) {
                       <button (click)="changeWeekType(type)"
                               [ngClass]="selectedWeekType()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
@@ -138,7 +156,7 @@
                 <!-- Weekdays -->
                 <div class="w-full">
                   <div
-                    class="flex justify-between overflow-hidden border border-dark-stone bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                    class="flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
                     @for (type of weekdays(); track type.value) {
                       <button (click)="changeWeekdays(type)"
                               [ngClass]="type.selected ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
@@ -165,7 +183,7 @@
 
                 @if (!allHours()) {
                   <div
-                    class="w-fit flex justify-between overflow-hidden border border-dark-stone bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
+                    class="w-fit flex justify-between overflow-hidden border border-stone-200 bg-white dark:bg-zinc-600 dark:border-zinc-700 divide-x divide-dark-stone dark:divide-zinc-800 rounded-lg">
                     @for (type of hourTypes(); track type.value) {
                       <button (click)="applyHourPreset(type)"
                               [ngClass]="selectedHour()?.value === type.value ? 'bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-600 text-white' : 'bg-white dark:bg-zinc-500 dark:hover:bg-zinc-600 text-gray-600 dark:text-zinc-200 hover:bg-gray-100'"
@@ -177,36 +195,6 @@
                 }
               </div>
               <!-- End of Custom days -->
-
-              @if (!allHours()) {
-                <!-- Hour range slider -->
-                  <!--<div class="w-full px-3 relative">
-                    <mat-slider [max]="23"
-                                [min]="0"
-                                [step]="1"
-                                [discrete]="true"
-                                [showTickMarks]="true"
-                                class="w-full">
-                      <input value="0"
-                             matSliderStartThumb
-                             [(ngModel)]="startHour"
-                             (ngModelChange)="onTimeRangeChange()"/>
-
-                      <input value="23"
-                             matSliderEndThumb
-                             [(ngModel)]="endHour"
-                             (ngModelChange)="onTimeRangeChange()"/>
-                    </mat-slider>
-
-                    <div class="w-full flex items-center justify-between relative -top-2 dark:text-zinc-200">
-                      <span class="text-xs">0:00</span>
-                      <span class="text-xs">8:00</span>
-                      <span class="text-xs">17:00</span>
-                      <span class="text-xs">23:00</span>
-                    </div>
-                </div>-->
-                  <!-- End of Hour range slider -->
-              }
             </div>
             <!-- End of Custom Hours -->
           }
@@ -220,25 +208,21 @@
   <footer
     class="w-full bg-stone-100 dark:bg-zinc-800 border-t border-t-stone-200 dark:border-t-zinc-800/50 flex gap-2 justify-end items-center h-11 px-3 pt-0.5 pb-1">
     <div class="flex items-center gap-1.5 text-xs mr-auto px-1">
-      <span class="text-gray-500 dark:text-gray-300">Range:</span>
+      <span class="hidden md:block text-gray-500 dark:text-gray-300">Range:</span>
 
       @if (selectedDateRange) {
-        <div class="text-stone-600 dark:text-zinc-100 flex items-center gap-1.5 font-semibold">
+        <div class="text-stone-600 dark:text-zinc-100 flex flex-col md:flex-row items-center md:gap-1.5 font-semibold">
           @if (selectedDateRange.start) {
             <span>{{ selectedDateRange.start | date: 'MMM d yyyy, HH:mm' }}</span>
           }
 
           @if (selectedDateRange.start && selectedDateRange.end) {
-            <span>-</span>
+            <span class="hidden md:block">-</span>
           }
 
           @if (selectedDateRange.end) {
             <span>{{ selectedDateRange.end | date: 'MMM d yyyy, HH:mm' }}</span>
           }
-        </div>
-      } @else {
-        <div class="text-stone-600 dark:text-zinc-100 flex items-center gap-1.5 font-medium">
-          Not selected
         </div>
       }
     </div>
